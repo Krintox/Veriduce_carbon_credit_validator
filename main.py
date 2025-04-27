@@ -37,6 +37,10 @@ def preprocess_input(data):
     transformed_features = feature_transformer.transform(df)
     return pd.DataFrame(transformed_features, columns=df.columns)
 
+@app.route('/')
+def home():
+    return jsonify({'message': 'API is up and running'})
+
 @app.route('/validate', methods=['POST'])
 def validate():
     """API endpoint to validate a carbon credit project."""
