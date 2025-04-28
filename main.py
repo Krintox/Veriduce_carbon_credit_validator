@@ -5,7 +5,7 @@ import joblib
 import os
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all domains
+CORS(app, resources={r"/*": {"origins": "https://veri-duce.vercel.app"}})
 
 # Load trained model (Ensure you have the correct path for deployment)
 MODEL_PATH = 'carbon_credit_validator.pkl'
