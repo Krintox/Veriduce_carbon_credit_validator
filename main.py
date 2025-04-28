@@ -2,12 +2,18 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 import joblib
+import os
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all domains
 
-# Load trained model
+# Load trained model (Ensure you have the correct path for deployment)
 MODEL_PATH = 'carbon_credit_validator.pkl'
+
+# Check if the model file exists
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model file {MODEL_PATH} not found.")
+
 model_data = joblib.load(MODEL_PATH)
 
 # Extract components
@@ -53,4 +59,7 @@ def validate():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=9654, debug=True)
+    # Running Flask in development mode (for local testing)
+    # For production deployment, you should use Gunicorn.
+    app.run(host='0.0.0.0', port=9654, debug=False)  # Set debug=False for production
+
